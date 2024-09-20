@@ -1,0 +1,45 @@
+.app-content {
+  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(5px + 2vmin);
+  color: white;
+}
+
+/* HEADER */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1,
+header form {
+  margin: 10px 0 10px;
+}
+
+header h1 {
+  margin-left: 30px;
+}
+
+header form {
+  margin-right: 30px;
+}
+
+header form input {
+  font-size: 1.25rem;
+  padding: 5px;
+}
+
+/* CONTENT */
+section {
+  flex-grow: 1;
+}
+
+/* FOOTER */
+footer p {
+  font-size: .95rem;
+}
