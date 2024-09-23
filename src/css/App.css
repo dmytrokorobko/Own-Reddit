@@ -64,6 +64,7 @@ section {
   padding: 10px 20px;
   cursor: pointer;
   transition: all .2s ease-in;
+  overflow: auto;
 }
 
 .post-item:hover {
@@ -124,6 +125,11 @@ section {
 
 .post-page .comments .comment-item p {
   margin-bottom: 15px;
+}
+
+.post-page .comments .comment-item p span {
+  font-style: italic;
+  text-decoration: underline;
 }
 
 /* FOOTER */

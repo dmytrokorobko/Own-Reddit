@@ -27,16 +27,14 @@ export const Page = () => {
                   <h1>{post.head.title}</h1>
                   <img src={post.head.thumbnail} alt={post.head.title} onClick={handleImgClick} style={{width: isLarge ? '400px' : '140px', height: isLarge ? '400px' : '140px'}} />
                </div>
-               <div className="comments">
-                  {post.comments ? (
-                     <>
-                        <h3>Comments:</h3>
-                        <Comments comments={post.comments} />
-                     </>
-                  ) : (
-                     <p>No comments in this thread</p>
-                  )}
-               </div>
+               {post.comments && post.comments.length > 0 ? (
+                  <div className="comments">
+                     <h3>Comments:</h3>
+                     <Comments comments={post.comments} />
+                  </div>
+               ) : (
+                  <p>No comments in this thread</p>
+               )}
             </div>
          )}            
       </>

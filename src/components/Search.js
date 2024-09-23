@@ -16,7 +16,7 @@ export const Search = () => {
    }
    return (
       <form onSubmit={handleSearch}>
-         <input type="text" placeholder="Search" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+         <input type="text" name="search" placeholder="Search" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
          <input type="submit" value="Search" />
       </form>
    )

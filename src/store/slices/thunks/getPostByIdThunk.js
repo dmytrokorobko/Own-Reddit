@@ -31,6 +31,7 @@ function getComments(comments) {
       const comment = {
          id: c.data.id,
          body: c.data.body, 
+         author: c.data.author,
          replies: []
       }
 
