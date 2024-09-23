@@ -39,6 +39,53 @@ section {
   flex-grow: 1;
 }
 
+/* POST-ITEMS */
+.post-items {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-evenly;
+}
+
+/* POST-ITEM */
+.post-item {
+  display: flex;
+  column-gap: 20px;
+  width: 300px;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #fafafa22;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all .2s ease-in;
+}
+
+.post-item:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.post-item h2 {
+  font-size: 1.25rem;
+}
+
+.post-item .comments {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.post-item p {
+  font-size: 1rem;
+  margin: 0;  
+}
+
+.error {
+  color: red;
+  font-style: italic;
+}
+
 /* FOOTER */
 footer p {
   font-size: .95rem;
