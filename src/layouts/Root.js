@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"
+import { Link, Outlet } from "react-router-dom"
 import { Search } from "../components/Search"
 
 export const Root = () => {
@@ -6,7 +6,7 @@ export const Root = () => {
       <div className="app-content">
          <header>
             <div>
-               <h1 className="logo">Own Reddit</h1>
+               <Link to="/"><h1 className="logo">Own Reddit</h1></Link>
             </div>
             <Search />
          </header>

@@ -6,7 +6,6 @@ export const getPostByIdThunk = createAsyncThunk(
    async({id}, thunkAPI) => {
       try {
          const response = await axios.get(`https://www.reddit.com/comments/${id}.json`);
-         console.log(response.data);
          if (response.data.length !== 2) return null;
          const post = {
             head: {
@@ -16,15 +15,8 @@ export const getPostByIdThunk = createAsyncThunk(
             },
             comments: []
          }
-         const comments = response.data[1].data.children.map(c => {
-            const comment = {
-               id: c.data.id,
-               body: c.data.body
-            }
-            return comment;            
-         })
+         const comments = getComments(response.data[1].data.children);
          post.comments = comments;
-         console.log(post);
          return post;
       } catch(err) {
          thunkAPI.rejectWithValue(err);
@@ -32,6 +24,20 @@ export const getPostByIdThunk = createAsyncThunk(
    }
 )
 
-function getOneMoreComment(comments) {
+function getComments(comments) {
+   if (comments.length === 0) return [];
+   
+   return comments.map(c => {
+      const comment = {
+         id: c.data.id,
+         body: c.data.body, 
+         replies: []
+      }
 
+      if (c.data.replies && c.data.replies.data && c.data.replies.data.children.length > 0) {
+         comment.replies = getComments(c.data.replies.data.children);
+      }
+      
+      return comment;            
+   })
 }

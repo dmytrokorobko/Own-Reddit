@@ -15,7 +15,6 @@ export const Home = () => {
    },[]);
 
    useEffect(() => {
-      console.log("search: " + search);
       if (search.length > 0) {
          dispatch(getSearchThunk({search}));
       }
@@ -25,7 +24,7 @@ export const Home = () => {
          {search ? (
             <h1>Search: {search}</h1>
          ) : (
-            <h1>Popular</h1>
+            <h1>Popular posts</h1>
          )}
 
          <div className="post-items">
