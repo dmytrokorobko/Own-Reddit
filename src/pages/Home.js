@@ -17,7 +17,6 @@ export const Home = () => {
    useEffect(() => {
       console.log("search: " + search);
       if (search.length > 0) {
-         console.log("Call search");
          dispatch(getSearchThunk({search}));
       }
    }, [search]);

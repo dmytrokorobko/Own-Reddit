@@ -70,7 +70,7 @@ const PostsSlice = createSlice({
          })
          .addCase(getPostByIdThunk.fulfilled, (state, action) => {
             state.loading = false;
-            state.post = action.payload;
+            state.post = action.payload;            
          })
          .addCase(getPostByIdThunk.rejected, (state, action) => {
             state.loading = false;

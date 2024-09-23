@@ -1,20 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createPostsList } from "../../../helper/createPostsList";
 
 export const getPopularThunk = createAsyncThunk(
    'posts/getPopularThunk',
    async(_, thunkAPI) => {
       try {
          const response = await axios.get('https://www.reddit.com/r/popular.json');
-         const posts = response.data.data.children.map(p => {
-            return {
-               id: p.data.id,
-               comments: p.data.num_comments,
-               title: p.data.title,
-               url: p.data.url
-            };
-         });
-         console.log(posts);
+         const posts = createPostsList({posts: response.data.data.children});
          return posts;
       } catch(err) {
          thunkAPI.rejectWithValue(err);
