@@ -35,6 +35,7 @@ const handleScroll = useCallback(() => {
       dispatch(getPopularThunk({after}));
    }
 }, [after]);
+```
 
 ### Searching Posts
 
@@ -63,4 +64,4 @@ function getComments(comments) {
       return comment;            
    })
 }
-
+```
