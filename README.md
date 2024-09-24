@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# Simple Own Reddit Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a simple Reddit client that allows users to lazy load posts, search for specific content, and display each post along with its comments. It uses a recursive function to retrieve and render comments, including nested replies, from a complex JSON structure.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Lazy Loading**: Posts are lazy-loaded as the user scrolls to the bottom of the page, ensuring efficient data loading and a smooth user experience.
+- **Search**: Users can search for posts within the `reactjs` subreddit.
+- **Comment Display**: Posts are displayed with their comments, including nested replies. The recursive function is used to handle and render deeply nested replies.
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React**: For building the user interface.
+- **Redux**: For state management, handling posts, search queries, and comments.
+- **Thunk**: For handling asynchronous API requests.
+- **Reddit JSON API**: Used to fetch posts, search results, and comments.
+- **Lazy Load**: Posts are fetched dynamically when the user scrolls to the bottom of the page.
+- **Recursion**: Used to traverse and render nested comments and replies.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Functionality
 
-### `npm test`
+### Lazy Loading
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Lazy loading is implemented by listening to the scroll event. When the user scrolls to the bottom of the page, the application triggers an API request to fetch more posts. The Redux store manages the state of the posts and the `after` parameter to handle pagination.
 
-### `npm run build`
+```js
+const handleScroll = useCallback(() => {
+   if (
+   window.innerHeight + document.documentElement.scrollTop ===
+   document.documentElement.offsetHeight
+   ) {
+   if (search.length > 0)
+      dispatch(getSearchThunk({search, after}));
+   else 
+      dispatch(getPopularThunk({after}));
+   }
+}, [after]);
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Searching Posts
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Search functionality allows users to look for specific posts in the reactjs subreddit. The search results are fetched via the Reddit JSON API and displayed in a list.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Recursive Comment Rendering
 
-### `npm run eject`
+The comments for each post are retrieved and displayed using a recursive function. This is necessary to handle the complex structure of nested replies within the Reddit API.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```js
+function getComments(comments) {
+   if (comments.length === 0) return [];
+   
+   return comments.map(c => {
+      const comment = {
+         id: c.data.id,
+         body: c.data.body, 
+         author: c.data.author,
+         replies: []
+      }
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+      if (c.data.replies && c.data.replies.data && c.data.replies.data.children.length > 0) {
+         comment.replies = getComments(c.data.replies.data.children);
+      }
+      
+      return comment;            
+   })
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
